@@ -5,28 +5,15 @@ FROM node:20.11-alpine as build
 WORKDIR /app
 
 # Copy package.json and package-lock.json to the container
-COPY package*.json ./
+COPY package.json .
 
-RUN npm -v
 # Install dependencies
 RUN npm install
 
+EXPOSE 5173
+
 # Copy the rest of the application code to the container
-COPY . .
-
-# Build the React app
-RUN npm run build
-
-# Use a lightweight Node.js image for the production build
-FROM node:20.11-alpine
-
-WORKDIR /app
-
-# Copy the production build from the build image
-COPY --from=build /app/build ./build
-
-# Expose the port on which your React app will run (e.g., 80)
-EXPOSE 80
+COPY * /app
 
 # Start the React app
-CMD ["npx", "serve", "-s", "build", "-l", "80"]
+CMD ["npm", "run", "dev"]

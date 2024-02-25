@@ -8,7 +8,7 @@ const useAuth = () => {
   const isRun = useRef(false);
 
   const client = new Keycloak({
-    url: "http://192.168.59.104:30008/",
+    url: "http://192.168.59.100:30008/",
     realm: "myRealm",
     clientId: "myClient",
   });
